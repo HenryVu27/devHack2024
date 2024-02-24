@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent } from 'react-leaflet';
@@ -30,6 +30,25 @@ export default function App() {
     const [position, setPosition] = useState(null);
     const [map, setMap] = useState(null);
     const utilityList = useSelector((state) => state.utility.utilityList);
+
+    useEffect(() => {
+        const testEndpoint = 'http://localhost:8000/navigate';
+
+        fetch(testEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                lat1: 49.80939896028802,
+                lon1: -97.13052928447725,
+                lat2: 49.80924310104695,
+                lon2: -97.13101744651796
+            })
+        })
+            .then((response) => console.log('response: ', response.json()))
+            .then((data) => console.log(data));
+    }, []);
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({

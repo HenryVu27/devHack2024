@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 import geojson
 from geopy.distance import geodesic
 
@@ -21,23 +20,6 @@ class Graph:
                     weight = geodesic(coord1, coord2).meters
                     self.graph.setdefault(coord1, []).append((coord2, weight))
                     self.graph.setdefault(coord2, []).append((coord1, weight))
-
-        # Getting stairs from DB
-        stairs = []
-        try:
-            client = MongoClient(mongo_uri)
-            db = client[database_name]
-            collection = db[collection_name]
-
-            filter_criteria = {"category": "stairs"}
-            results = collection.find(filter_criteria, {"location.coordinates": 1, "_id": 0})
-
-            for result in results:
-                stairs.append(result["location"]["coordinates"])
-        except Exception as e:
-            print(e)
-        finally:
-            client.close()
 
     def find_nearest_node(self, coord):
         return min(self.graph.keys(), key=lambda x: geodesic(coord, x).meters)
@@ -93,11 +75,8 @@ class Graph:
             distance = geodesic(end_node, self.path_c[len(self.path_c)-1]).meters
             for i in range(len(self.path_c)-1, 0, -1):
                 distance += geodesic(self.path_c[i], self.path_c[i-1]).meters
-                # print(self.path_c[i])
                 self.path_d[i] = distance
             self.path_d[0] = geodesic(self.path_c[0], start_node).meters + distance
-
-        #    print(f'Distance from current location to the end of the path = {self.path_d[0]} meters')
         else:
             pass
 
@@ -115,5 +94,3 @@ class Graph:
                 smallest_index = i
         distance = smallest + self.path_d[smallest_index]
         return distance
-
-# reset if reached
