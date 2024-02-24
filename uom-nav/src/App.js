@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import { useSelector } from 'react-redux';
@@ -10,7 +10,6 @@ import { Box, Stack } from '@mui/material';
 
 import { center, zoom } from './assets/constants';
 import { divIcon, point } from 'leaflet';
-import SetViewOnClick from './components/SetViewOnClick';
 import UtilityDrawer from 'components/UtilityDrawer';
 import SelfLocatedButton from './components/SelfLocatedButton';
 import RecenterButton from './components/RecenterButton';
@@ -42,6 +41,14 @@ export default function App() {
         return markerPosition === null ? null : <Marker position={markerPosition} icon={pinIcon} />;
     };
 
+    const SetViewOnClick = () => {
+        const map = useMapEvent('click', (e) => {
+            map.setView(e.latlng, map.getZoom(), {
+                animate: true
+            });
+        });
+    };
+
     const displayUtilTypes = utilityList.map((checkedUtil) => utilities.find((util) => util.label === checkedUtil));
     const displayUtils = [];
     displayUtilTypes.forEach((utilType) =>
@@ -55,7 +62,6 @@ export default function App() {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
                 <AddMarkerToClickLocation />
                 {position === null ? null : <Marker position={position} icon={pinIcon} />}
 
