@@ -98,15 +98,8 @@ class Graph:
 
     def navigation(self, start_x, start_y, end_x, end_y):
         # Define your start and end coordinates
-        # start_x = input()
-        # start_y = input()
-        # end_x = input()
-        # end_y = input()
         start_coord = (start_x, start_y)
         end_coord = (end_x, end_y)
-
-        # start_coord = (-78.9280652, 36.0077519)  # Replace with your start coordinate
-        # end_coord = (-78.9358661, 36.0055298)  # Replace with your end coordinate
 
         # Find the nearest nodes to your start and end coordinates
         start_node = self.find_nearest_node(start_coord)
@@ -114,6 +107,10 @@ class Graph:
 
         # Find the shortest path using Dijkstra's algorithm
         path = self.dijkstra(start_node, end_node)
+
+        if path is None:
+            return {"error": "Path not found."}, 0
+    
         self.path_c = [node for node in path]
 
         distance = 0
