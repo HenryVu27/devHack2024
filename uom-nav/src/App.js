@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -62,8 +63,8 @@ export default function App() {
 
             <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
                 {/* Mapping through the markers */}
-                {markers.map((marker) => (
-                    <Marker position={marker.geocode} icon={customIcon}>
+                {markers.map((marker, idx) => (
+                    <Marker position={marker.geocode} icon={customIcon} key={idx}>
                         <Popup>{marker.popUp}</Popup>
                     </Marker>
                 ))}
