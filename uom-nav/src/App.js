@@ -50,23 +50,23 @@ export default function App() {
     useEffect(() => {
         const getPath = async () => {
             if (building && localStorage.getItem('curLocationLat') && localStorage.getItem('curLocationLng')) {
-                // const shortestPath = await getShortestPath(
-                //     {
-                //         lat: parseFloat(localStorage.getItem('curLocationLat')),
-                //         lng: parseFloat(localStorage.getItem('curLocationLng'))
-                //     },
-                //     {
-                //         lat: building.coords[0],
-                //         lng: building.coords[1]
-                //     }
-                // );
                 const shortestPath = await getShortestPath(
-                    { lat: 49.8072, lng: -97.13052928448 },
+                    {
+                        lat: parseFloat(localStorage.getItem('curLocationLat')),
+                        lng: parseFloat(localStorage.getItem('curLocationLng'))
+                    },
                     {
                         lat: building.coords[0],
                         lng: building.coords[1]
                     }
                 );
+                // const shortestPath = await getShortestPath(
+                //     { lat: 49.8072, lng: -97.13052928448 },
+                //     {
+                //         lat: building.coords[0],
+                //         lng: building.coords[1]
+                //     }
+                // );
                 setPath(shortestPath[0]);
             } else {
                 setPath(null);
