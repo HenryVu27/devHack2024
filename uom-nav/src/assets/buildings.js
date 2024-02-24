@@ -53,17 +53,17 @@ const buildings = [
         coords: [49.80800066066786, -97.1340537071228]
     },
     {
-        label: 'Faculty of Architecture John A. Russell Building',
+        value: 'Faculty of Architecture John A. Russell Building',
         label: 'Faculty of Architecture John A. Russell Building',
         coords: [49.808128814925546, -97.13516950607301]
     },
     {
-        label: 'Faculty of Architecture Architecture 2 Building',
+        value: 'Faculty of Architecture Architecture 2 Building',
         label: 'Faculty of Architecture Architecture 2 Building',
         coords: [49.8078932879205, -97.13655889034273]
     },
     {
-        label: 'Marcel A.Desautels Faculty of Music',
+        value: 'Marcel A.Desautels Faculty of Music',
         label: 'Marcel A.Desautels Faculty of Music',
         coords: [49.807273292237134, -97.13597416877748]
     },
