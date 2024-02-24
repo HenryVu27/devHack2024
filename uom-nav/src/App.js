@@ -70,23 +70,26 @@ export default function App() {
     };
 
     return (
-        <MapContainer center={[49.8092, -97.13]} zoom={13}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <>
+            <MapContainer center={[49.8092, -97.13]} zoom={13}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
 
-            <AddMarkerToClickLocation />
-            <SelfLocation />
-            <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
-                {/* Mapping through the markers */}
-                {markers.map((marker, idx) => (
-                    <Marker position={marker.geocode} icon={customIcon} key={idx}>
-                        <Popup>{marker.popUp}</Popup>
-                    </Marker>
-                ))}
-            </MarkerClusterGroup>
-            <SetViewOnClick/>
-        </MapContainer>
+                <AddMarkerToClickLocation />
+                <SelfLocation />
+                <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
+                    {/* Mapping through the markers */}
+                    {markers.map((marker, idx) => (
+                        <Marker position={marker.geocode} icon={customIcon} key={idx}>
+                            <Popup>{marker.popUp}</Popup>
+                        </Marker>
+                    ))}
+                </MarkerClusterGroup>
+                <SetViewOnClick />
+            </MapContainer>
+            <UtilityDrawer />
+        </>
     );
 }
