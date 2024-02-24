@@ -6,7 +6,6 @@ const SetViewOnClick = () => {
             animate: true
         });
     });
-    return null;
 };
 
 export default SetViewOnClick;
