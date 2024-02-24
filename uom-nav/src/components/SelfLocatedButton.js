@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { IconButton, Tooltip } from '@mui/material';
 import { IconCurrentLocation } from '@tabler/icons-react';
 
-function SelfLocatedButton({ map, setPosition }) {
+const SelfLocatedButton = ({ map, setPosition }) => {
     const handleClick = useCallback(() => {
-        map.locate().on('locationfound', function (e) {
+        map.locate().on('locationfound', (e) => {
             setPosition(e.latlng);
             map.flyTo(e.latlng, map.getZoom());
         });
@@ -19,7 +19,7 @@ function SelfLocatedButton({ map, setPosition }) {
             </IconButton>
         </Tooltip>
     );
-}
+};
 
 SelfLocatedButton.propTypes = {
     map: PropTypes.any,

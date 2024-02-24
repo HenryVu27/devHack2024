@@ -13,13 +13,7 @@ const CheckBoxes = () => {
     let dispatch = useDispatch();
 
     const handleChange = (event, utilLabel) => {
-        let action;
-        if (event.target.checked) {
-            action = addUtility(utilLabel);
-        } else {
-            action = removeUtility(utilLabel);
-        }
-        dispatch(action);
+        event.target.checked ? dispatch(addUtility(utilLabel)) : dispatch(removeUtility(utilLabel));
     };
 
     return (
@@ -28,7 +22,10 @@ const CheckBoxes = () => {
                 <FormControlLabel
                     control={
                         <>
-                            <Checkbox checked={utilityList.includes(utility.label)} onChange={() => handleChange(event, utility.label)} />
+                            <Checkbox
+                                checked={utilityList.includes(utility.label)}
+                                onChange={(event) => handleChange(event, utility.label)}
+                            />
                             {utility.icon}
                         </>
                     }
