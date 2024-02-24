@@ -4,7 +4,7 @@ import { Box, Drawer, Button } from '@mui/material';
 
 import CheckBoxes from './CheckBoxes';
 
-export default function UtilityDrawer() {
+const UtilityDrawer = () => {
     const [open, setOpen] = useState(false);
 
     const toggleDrawer = (newOpen) => () => {
@@ -13,7 +13,7 @@ export default function UtilityDrawer() {
 
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation">
-            <CheckBoxes></CheckBoxes>
+            <CheckBoxes />
         </Box>
     );
 
@@ -27,4 +27,6 @@ export default function UtilityDrawer() {
             </Drawer>
         </div>
     );
-}
+};
+
+export default UtilityDrawer;

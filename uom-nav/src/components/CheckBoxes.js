@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import utilities from 'assets/utilities';
 
-export default function CheckBoxes() {
+const CheckBoxes = () => {
     return (
         <FormGroup sx={{ m: 3 }}>
             {utilities.map((utility, idx) => (
@@ -22,4 +22,6 @@ export default function CheckBoxes() {
             ))}
         </FormGroup>
     );
-}
+};
+
+export default CheckBoxes;

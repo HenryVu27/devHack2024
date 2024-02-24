@@ -2,8 +2,8 @@ import React from 'react';
 import { IconBadgeWc, IconStairs } from '@tabler/icons-react';
 
 const utilities = [
-    { label: 'nhà vệ xin', icon: <IconBadgeWc /> },
-    { label: 'cầu thang', icon: <IconStairs /> }
+    { label: 'washroom', icon: <IconBadgeWc /> },
+    { label: 'staircase', icon: <IconStairs /> }
 ];
 
 export default utilities;

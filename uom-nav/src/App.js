@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { useState } from 'react';
-import SetViewOnClick from './AnimatedPanning';
+import SetViewOnClick from './components/SetViewOnClick';
 
-import { Icon, divIcon, point } from 'leaflet';
+import { Icon } from 'leaflet';
 import UtilityDrawer from 'components/UtilityDrawer';
 
 // create custom icon
@@ -15,31 +14,6 @@ const customIcon = new Icon({
     // iconUrl: require('./icons/placeholder.png'),
     iconSize: [38, 38] // size of the icon
 });
-
-// custom cluster icon
-const createClusterCustomIcon = function (cluster) {
-    return new divIcon({
-        html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-        className: 'custom-marker-cluster',
-        iconSize: point(33, 33, true)
-    });
-};
-
-// markers
-const markers = [
-    {
-        geocode: [48.86, 2.3522],
-        popUp: 'Hello, I am pop up 1'
-    },
-    {
-        geocode: [48.85, 2.3522],
-        popUp: 'Hello, I am pop up 2'
-    },
-    {
-        geocode: [49.8092, -97.13],
-        popUp: 'Hello, I am pop up 3'
-    }
-];
 
 export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
@@ -60,7 +34,7 @@ export default function App() {
     };
 
     const AddMarkerToClickLocation = () => {
-        const map = useMapEvents({
+        useMapEvents({
             click(e) {
                 setMarkerPosition(e.latlng);
             }
@@ -79,14 +53,6 @@ export default function App() {
 
                 <AddMarkerToClickLocation />
                 <SelfLocation />
-                <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
-                    {/* Mapping through the markers */}
-                    {markers.map((marker, idx) => (
-                        <Marker position={marker.geocode} icon={customIcon} key={idx}>
-                            <Popup>{marker.popUp}</Popup>
-                        </Marker>
-                    ))}
-                </MarkerClusterGroup>
                 <SetViewOnClick />
             </MapContainer>
             <UtilityDrawer />
