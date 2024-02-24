@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent } from 'react-leaflet';
+import { Icon } from 'leaflet';
+
+import UtilityDrawer from 'components/UtilityDrawer';
+
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { useState } from 'react';
-import SetViewOnClick from './components/SetViewOnClick';
-
-import { Icon } from 'leaflet';
-import UtilityDrawer from 'components/UtilityDrawer';
 
 // create custom icon
 const customIcon = new Icon({
@@ -41,6 +40,14 @@ export default function App() {
         });
 
         return markerPosition === null ? null : <Marker position={markerPosition} icon={customIcon} />;
+    };
+
+    const SetViewOnClick = () => {
+        const map = useMapEvent('click', (e) => {
+            map.setView(e.latlng, map.getZoom(), {
+                animate: true
+            });
+        });
     };
 
     return (
