@@ -1,7 +1,8 @@
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
+import { useState } from 'react';
 
 import { Icon, divIcon, point } from 'leaflet';
 
@@ -32,14 +33,41 @@ const markers = [
         popUp: 'Hello, I am pop up 2'
     },
     {
-        geocode: [48.855, 2.34],
+        geocode: [49.8092, -97.13],
         popUp: 'Hello, I am pop up 3'
     }
 ];
 
 export default function App() {
+    const [markerPosition, setMarkerPosition] = useState(null);
+    const [position, setPosition] = useState(null);
+
+    const SelfLocation = () => {
+        const map = useMapEvents({
+            contextmenu() {
+                map.locate();
+            },
+            locationfound(e) {
+                setPosition(e.latlng);
+                map.flyTo(e.latlng, map.getZoom());
+            }
+        });
+
+        return position === null ? null : <Marker position={position} icon={customIcon} />;
+    };
+
+    const AddMarkerToClickLocation = () => {
+        const map = useMapEvents({
+            click(e) {
+                setMarkerPosition(e.latlng);
+            }
+        });
+
+        return markerPosition === null ? null : <Marker position={markerPosition} icon={customIcon} />;
+    };
+
     return (
-        <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+        <MapContainer center={[49.8092, -97.13]} zoom={13}>
             {/* OPEN STREEN MAPS TILES */}
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -60,26 +88,8 @@ export default function App() {
         subdomains={["mt0", "mt1", "mt2", "mt3"]}
       /> */}
 
-            <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
-                {/* Mapping through the markers */}
-                {markers.map((marker) => (
-                    <Marker position={marker.geocode} icon={customIcon}>
-                        <Popup>{marker.popUp}</Popup>
-                    </Marker>
-                ))}
-
-                {/* Hard coded markers */}
-                {/* <Marker position={[51.505, -0.09]} icon={customIcon}>
-          <Popup>This is popup 1</Popup>
-        </Marker>
-        <Marker position={[51.504, -0.1]} icon={customIcon}>
-          <Popup>This is popup 2</Popup>
-        </Marker>
-        <Marker position={[51.5, -0.09]} icon={customIcon}>
-          <Popup>This is popup 3</Popup>
-        </Marker>
-       */}
-            </MarkerClusterGroup>
+            <AddMarkerToClickLocation />
+            <SelfLocation />
         </MapContainer>
     );
 }
