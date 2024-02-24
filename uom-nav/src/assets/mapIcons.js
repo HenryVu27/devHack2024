@@ -5,6 +5,11 @@ const pinIcon = new Icon({
     iconSize: [38, 38] // size of the icon
 });
 
+const selfIcon = new Icon({
+    iconUrl: require('./icons/map-pin-filled-self.png'),
+    iconSize: [38, 38] // size of the icon
+});
+
 const wcIcon = new Icon({
     iconUrl: require('./icons/badge-wc.png'),
     iconSize: [38, 38] // size of the icon
@@ -40,4 +45,8 @@ const tunnelIcon = new Icon({
     iconSize: [38, 38] // size of the icon
 });
 
-export { pinIcon, wcIcon, stairsIcon, bookIcon, escalatorIcon, parkingIcon, packbackIcon, tunnelIcon };
+const selfIncon = new Icon({
+    iconUrl: require
+});
+
+export { pinIcon, wcIcon, stairsIcon, bookIcon, escalatorIcon, parkingIcon, packbackIcon, tunnelIcon, selfIcon };

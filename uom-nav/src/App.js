@@ -24,6 +24,7 @@ import { getShortestPath } from './app/resources/navigation';
 // Assets
 import utilities from './assets/utilities';
 import { pinIcon } from 'assets/mapIcons';
+import { selfIcon } from 'assets/mapIcons';
 import buildings from './assets/buildings';
 import { UM_CENTER_COOR, ZOOM } from './assets/constants';
 import './App.css';
@@ -40,6 +41,7 @@ const createClusterCustomIcon = function (cluster) {
 export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
+    const [selfPosition, setSelfPosition] = useState(null);
     const [map, setMap] = useState(null);
     const [path, setPath] = useState(null);
 
@@ -114,7 +116,7 @@ export default function App() {
                 {position === null ? null : <Marker position={position} icon={pinIcon} />}
 
                 <SetViewOnClick />
-
+                {selfPosition === null ? null : <Marker position={selfPosition} icon={selfIcon} />}
                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
                     {displayUtils.map((displayUtil, id) => {
                         return (
@@ -130,7 +132,7 @@ export default function App() {
             </MapContainer>
             <Box>
                 <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
-                    {map ? <SelfLocatedButton map={map} setPosition={setPosition} /> : null}
+                    {map ? <SelfLocatedButton map={map} setPosition={setSelfPosition} /> : null}
                     <UtilityDrawer />
                     {map ? <RecenterButton map={map} /> : null}
                 </Stack>
