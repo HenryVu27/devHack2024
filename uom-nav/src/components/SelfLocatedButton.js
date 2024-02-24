@@ -9,6 +9,7 @@ const SelfLocatedButton = ({ map, setPosition }) => {
         map.locate().on('locationfound', (e) => {
             setPosition(e.latlng);
             map.flyTo(e.latlng, map.getZoom());
+            localStorage.setItem('currentLocation', e.latlng);
         });
     }, [map]);
 

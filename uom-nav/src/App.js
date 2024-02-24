@@ -15,6 +15,7 @@ import SelfLocatedButton from './components/SelfLocatedButton';
 import RecenterButton from './components/RecenterButton';
 import utilities from './assets/utilities';
 import { pinIcon } from 'assets/mapIcons';
+import buildings from './assets/buildings';
 
 // custom cluster icon
 const createClusterCustomIcon = function (cluster) {
@@ -27,11 +28,18 @@ const createClusterCustomIcon = function (cluster) {
 
 const apiUrl = 'http://localhost:8000/navigate';
 
-export default function App() {
+export default async function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
     const [map, setMap] = useState(null);
     const utilityList = useSelector((state) => state.utility.utilityList);
+    const currBuilding = useSelector((state) => state.building.building);
+    const building = buildings.find((building) => building.value === currBuilding);
+
+    if (building && localStorage.getItem('currentLocation')) {
+        const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lon: building.coords[1] });
+        console.log(path);
+    }
 
     const getShortestPath = async (lat1, lon1, lat2, lon2) => {
         fetch(apiUrl, {
