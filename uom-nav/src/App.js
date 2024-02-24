@@ -25,30 +25,27 @@ const createClusterCustomIcon = function (cluster) {
     });
 };
 
+const apiUrl = 'http://localhost:8000/navigate';
+
 export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
     const [map, setMap] = useState(null);
     const utilityList = useSelector((state) => state.utility.utilityList);
 
-    useEffect(() => {
-        const testEndpoint = 'http://localhost:8000/navigate';
-
-        fetch(testEndpoint, {
+    const getShortestPath = async (lat1, lon1, lat2, lon2) => {
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                lat1: 49.80939896028802,
-                lon1: -97.13052928447725,
-                lat2: 49.80924310104695,
-                lon2: -97.13101744651796
-            })
+            body: JSON.stringify({ lat1, lon1, lat2, lon2 }),
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer'
         })
             .then((response) => console.log('response: ', response.json()))
             .then((data) => console.log(data));
-    }, []);
+    };
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({

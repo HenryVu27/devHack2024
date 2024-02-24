@@ -17,6 +17,8 @@ class Graph:
                 for i in range(len(coordinates) - 1):
                     coord1 = tuple(coordinates[i])
                     coord2 = tuple(coordinates[i + 1])
+                    coord1 = (coord1[1], coord1[0])
+                    coord2 = (coord2[1], coord2[0])
                     weight = geodesic(coord1, coord2).meters
                     self.graph.setdefault(coord1, []).append((coord2, weight))
                     self.graph.setdefault(coord2, []).append((coord1, weight))
