@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
@@ -88,8 +89,31 @@ export default function App() {
         subdomains={["mt0", "mt1", "mt2", "mt3"]}
       /> */}
 
+<<<<<<< HEAD
             <AddMarkerToClickLocation />
             <SelfLocation />
+=======
+            <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
+                {/* Mapping through the markers */}
+                {markers.map((marker, idx) => (
+                    <Marker position={marker.geocode} icon={customIcon} key={idx}>
+                        <Popup>{marker.popUp}</Popup>
+                    </Marker>
+                ))}
+
+                {/* Hard coded markers */}
+                {/* <Marker position={[51.505, -0.09]} icon={customIcon}>
+          <Popup>This is popup 1</Popup>
+        </Marker>
+        <Marker position={[51.504, -0.1]} icon={customIcon}>
+          <Popup>This is popup 2</Popup>
+        </Marker>
+        <Marker position={[51.5, -0.09]} icon={customIcon}>
+          <Popup>This is popup 3</Popup>
+        </Marker>
+       */}
+            </MarkerClusterGroup>
+>>>>>>> 5c90eb9418bd6e4f0147e4da58e01a5d27433f38
         </MapContainer>
     );
 }
