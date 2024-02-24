@@ -6,12 +6,15 @@ import { useSelector } from 'react-redux';
 
 // Leaflet
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent, Popup, Polyline } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { divIcon, point } from 'leaflet';
 
 // Material UI
 import { Box, Stack } from '@mui/material';
+
+// Toastify
+import { toast } from 'react-toastify';
 
 // Components
 import UtilityDrawer from 'components/UtilityDrawer';
@@ -24,6 +27,7 @@ import { getShortestPath } from './app/resources/navigation';
 // Assets
 import utilities from './assets/utilities';
 import { pinIcon } from 'assets/mapIcons';
+import { selfIcon } from 'assets/mapIcons';
 import buildings from './assets/buildings';
 import { UM_CENTER_COOR, ZOOM } from './assets/constants';
 import './App.css';
@@ -40,32 +44,46 @@ const createClusterCustomIcon = function (cluster) {
 export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
+    const [selfPosition, setSelfPosition] = useState(null);
     const [map, setMap] = useState(null);
+    const [path, setPath] = useState(null);
+
     const utilityList = useSelector((state) => state.utility.utilityList);
     const currBuilding = useSelector((state) => state.building.building);
     const building = buildings.find((building) => building.value === currBuilding);
 
-    // if (building && localStorage.getItem('currentLocation')) {
-    //     const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lng: building.coords[1] });
-    //     console.log(path);
-    // }
-
     useEffect(() => {
         const getPath = async () => {
             if (building && localStorage.getItem('curLocationLat') && localStorage.getItem('curLocationLng')) {
-                const path = await getShortestPath(
-                    { lat: parseFloat(localStorage.getItem('curLocationLat')), lng: parseFloat(localStorage.getItem('curLocationLng')) },
+                const shortestPath = await getShortestPath(
+                    {
+                        lat: parseFloat(localStorage.getItem('curLocationLat')),
+                        lng: parseFloat(localStorage.getItem('curLocationLng'))
+                    },
                     {
                         lat: building.coords[0],
                         lng: building.coords[1]
                     }
                 );
-                console.log(path);
+                // const shortestPath = await getShortestPath(
+                //     { lat: 49.8072, lng: -97.13052928448 },
+                //     {
+                //         lat: building.coords[0],
+                //         lng: building.coords[1]
+                //     }
+                // );
+                if (shortestPath[0].error) {
+                    toast.error(shortestPath[0].error);
+                } else {
+                    setPath(shortestPath[0]);
+                }
+            } else {
+                setPath(null);
             }
         };
 
         getPath();
-    }, [building, localStorage.getItem('currentLocation')]);
+    }, [building, localStorage.getItem('curLocationLat'), localStorage.getItem('curLocationLng')]);
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({
@@ -104,7 +122,7 @@ export default function App() {
                 {position === null ? null : <Marker position={position} icon={pinIcon} />}
 
                 <SetViewOnClick />
-
+                {selfPosition === null ? null : <Marker position={selfPosition} icon={selfIcon} />}
                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
                     {displayUtils.map((displayUtil, id) => {
                         return (
@@ -116,10 +134,11 @@ export default function App() {
                         );
                     })}
                 </MarkerClusterGroup>
+                {path && <Polyline pathOptions={{ color: 'lime' }} positions={path} />}
             </MapContainer>
             <Box>
                 <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
-                    {map ? <SelfLocatedButton map={map} setPosition={setPosition} /> : null}
+                    {map ? <SelfLocatedButton map={map} setPosition={setSelfPosition} /> : null}
                     <UtilityDrawer />
                     {map ? <RecenterButton map={map} /> : null}
                 </Stack>

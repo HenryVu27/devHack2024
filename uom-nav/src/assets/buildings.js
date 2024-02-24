@@ -1,11 +1,11 @@
 const buildings = [
-    { value: 'isbister', label: 'isbister', coords: [49.80939896028802, -97.13052928447725] },
-    { value: 'tier', label: 'tier', coords: [49.80924310104695, -97.13101744651796] },
-    { value: 'fletcher argue', label: 'fletcher argue', coords: [49.80974184885172, -97.13145196437837] },
-    { value: 'elizabeth dafoe library', label: 'elizabeth dafoe library', coords: [49.81024751846262, -97.13164508342744] },
-    { value: 'human ecology', label: 'human ecology', coords: [49.810773963403356, -97.13210642337799] },
-    { value: 'university college residence', label: 'university college residence', coords: [49.81138352407593, -97.13042736053468] },
-    { value: 'robson hall', label: 'robson hall', coords: [49.8118961032448, -97.13055074214937] },
+    { value: 'isbister', label: 'Isbister', coords: [49.80939896028802, -97.13052928447725] },
+    { value: 'tier', label: 'Tier', coords: [49.80924310104695, -97.13101744651796] },
+    { value: 'fletcher argue', label: 'Fletcher Argue', coords: [49.80974184885172, -97.13145196437837] },
+    { value: 'elizabeth dafoe library', label: 'Elizabeth Dafoe Library', coords: [49.81024751846262, -97.13164508342744] },
+    { value: 'human ecology', label: 'Human Ecology', coords: [49.810773963403356, -97.13210642337799] },
+    { value: 'university college residence', label: 'University College Residence', coords: [49.81138352407593, -97.13042736053468] },
+    { value: 'robson hall', label: 'Robson Hall', coords: [49.8118961032448, -97.13055074214937] },
     { value: 'Duff Roblin', label: 'Duff Roblin', coords: [49.81109259834895, -97.13238537311555] },
     { value: 'Machray Hall', label: 'Machray Hall', coords: [49.81125537843548, -97.13334023952486] },
     { value: 'Armes', label: 'Armes', coords: [49.81093328113837, -97.1338552236557] },
@@ -53,17 +53,17 @@ const buildings = [
         coords: [49.80800066066786, -97.1340537071228]
     },
     {
-        label: 'Faculty of Architecture John A. Russell Building',
+        value: 'Faculty of Architecture John A. Russell Building',
         label: 'Faculty of Architecture John A. Russell Building',
         coords: [49.808128814925546, -97.13516950607301]
     },
     {
-        label: 'Faculty of Architecture Architecture 2 Building',
+        value: 'Faculty of Architecture Architecture 2 Building',
         label: 'Faculty of Architecture Architecture 2 Building',
         coords: [49.8078932879205, -97.13655889034273]
     },
     {
-        label: 'Marcel A.Desautels Faculty of Music',
+        value: 'Marcel A.Desautels Faculty of Music',
         label: 'Marcel A.Desautels Faculty of Music',
         coords: [49.807273292237134, -97.13597416877748]
     },

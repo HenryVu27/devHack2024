@@ -1,6 +1,5 @@
-import geojson
 from geopy.distance import geodesic
-from tunnelData import points
+import geojson
 
 class Graph:
     def __init__(self):
@@ -22,22 +21,6 @@ class Graph:
                     weight = geodesic(coord1, coord2).meters
                     self.graph.setdefault(coord1, []).append((coord2, weight))
                     self.graph.setdefault(coord2, []).append((coord1, weight))
-
-        for s in points:
-            arbitrary_coord = (s[0], s[1])
-            distances = {}
-            for vertex in self.graph.keys():
-                distance = geodesic(arbitrary_coord, vertex).meters
-                distances[vertex] = distance
-
-            sorted_nodes = sorted(distances, key=lambda k: distances[k])[:3]
-
-            closest_distance = float('inf')
-
-            # Iterate through the 3 closest nodes and their adjacent edges
-            for node in sorted_nodes:
-                self.graph.setdefault(arbitrary_coord, []).append((node, distances[node]))
-                self.graph.setdefault(node, []).append((arbitrary_coord, distances[node]))
 
     def find_nearest_node(self, coord):
         return min(self.graph.keys(), key=lambda x: geodesic(coord, x).meters)
@@ -68,15 +51,8 @@ class Graph:
 
     def navigation(self, start_x, start_y, end_x, end_y):
         # Define your start and end coordinates
-        # start_x = input()
-        # start_y = input()
-        # end_x = input()
-        # end_y = input()
         start_coord = (start_x, start_y)
         end_coord = (end_x, end_y)
-
-        # start_coord = (-78.9280652, 36.0077519)  # Replace with your start coordinate
-        # end_coord = (-78.9358661, 36.0055298)  # Replace with your end coordinate
 
         # Find the nearest nodes to your start and end coordinates
         start_node = self.find_nearest_node(start_coord)
@@ -84,7 +60,10 @@ class Graph:
 
         # Find the shortest path using Dijkstra's algorithm
         path = self.dijkstra(start_node, end_node)
-        print(path)
+
+        if path is None:
+            return {"error": "Path not found."}, 0
+    
         self.path_c = [node for node in path]
 
         distance = 0
