@@ -1,0 +1,5 @@
+pip install "unicorn[standard]"
+pip install fastapi
+pip install pydantic
+pip install geojson
+pip install geopy

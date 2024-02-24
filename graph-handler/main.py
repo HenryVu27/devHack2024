@@ -31,6 +31,6 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/navigate")
+@app.post("/shortest-path")
 def navigate(data: Coordinates):
     return graph.navigation(data.lon1, data.lat1, data.lon2, data.lat2)

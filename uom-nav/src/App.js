@@ -1,21 +1,32 @@
+// React
 import React, { useEffect, useState } from 'react';
-import './App.css';
+
+// Redux
+import { useSelector } from 'react-redux';
+
+// Leaflet
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
+import { divIcon, point } from 'leaflet';
 
-import { useSelector } from 'react-redux';
-
+// Material UI
 import { Box, Stack } from '@mui/material';
 
-import { UM_CENTER_COOR, ZOOM } from './assets/constants';
-import { divIcon, point } from 'leaflet';
+// Components
 import UtilityDrawer from 'components/UtilityDrawer';
 import SelfLocatedButton from './components/SelfLocatedButton';
 import RecenterButton from './components/RecenterButton';
+
+// Resources
+import { getShortestPath } from './app/resources/navigation';
+
+// Assets
 import utilities from './assets/utilities';
 import { pinIcon } from 'assets/mapIcons';
 import buildings from './assets/buildings';
+import { UM_CENTER_COOR, ZOOM } from './assets/constants';
+import './App.css';
 
 // custom cluster icon
 const createClusterCustomIcon = function (cluster) {
@@ -26,9 +37,7 @@ const createClusterCustomIcon = function (cluster) {
     });
 };
 
-const apiUrl = 'http://localhost:8000/navigate';
-
-export default async function App() {
+export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
     const [map, setMap] = useState(null);
@@ -36,24 +45,19 @@ export default async function App() {
     const currBuilding = useSelector((state) => state.building.building);
     const building = buildings.find((building) => building.value === currBuilding);
 
-    if (building && localStorage.getItem('currentLocation')) {
-        const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lon: building.coords[1] });
-        console.log(path);
-    }
+    // if (building && localStorage.getItem('currentLocation')) {
+    //     const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lon: building.coords[1] });
+    //     console.log(path);
+    // }
 
-    const getShortestPath = async (lat1, lon1, lat2, lon2) => {
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ lat1, lon1, lat2, lon2 }),
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer'
-        })
-            .then((response) => console.log('response: ', response.json()))
-            .then((data) => console.log(data));
-    };
+    useEffect(() => {
+        const getPath = async () => {
+            const path = await getShortestPath({ lat: -97.1341773, lng: 49.8108516 }, { lat: -97.1335224, lng: 49.8110807 });
+            console.log(path);
+        };
+
+        getPath();
+    }, []);
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({
