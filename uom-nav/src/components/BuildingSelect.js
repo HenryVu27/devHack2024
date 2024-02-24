@@ -1,22 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Select from 'react-select';
+
 import buildings from 'assets/buildings';
 import { setBuilding } from 'app/features/building/buildingSlice';
 
 const BuildingSelect = () => {
     const currentBuilding = useSelector((state) => state.building.building);
-    let dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    const handleChange = (event) => {
-        let action;
-        if (event) {
-            action = setBuilding(event.value);
-        } else {
-            action = setBuilding('');
-        }
-        dispatch(action);
+    const handleChange = (e) => {
+        e ? dispatch(setBuilding(e.value)) : dispatch(setBuilding(''));
     };
     return (
         <Select

@@ -6,7 +6,7 @@ import { IconHome } from '@tabler/icons-react';
 
 import { center, zoom } from 'assets/constants';
 
-function RecenterButton({ map }) {
+const RecenterButton = ({ map }) => {
     const handleClick = useCallback(() => {
         map.flyTo(center, zoom);
     }, [map]);
@@ -18,7 +18,7 @@ function RecenterButton({ map }) {
             </IconButton>
         </Tooltip>
     );
-}
+};
 
 RecenterButton.propTypes = {
     map: PropTypes.any
