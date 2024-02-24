@@ -1,5 +1,5 @@
-import geojson
 from geopy.distance import geodesic
+import geojson
 
 class Graph:
     def __init__(self):
