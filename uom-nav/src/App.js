@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useState } from 'react';
+import SetViewOnClick from './AnimatedPanning';
 
 import { Icon, divIcon, point } from 'leaflet';
 
@@ -84,6 +85,7 @@ export default function App() {
                     </Marker>
                 ))}
             </MarkerClusterGroup>
+            <SetViewOnClick/>
         </MapContainer>
     );
 }
