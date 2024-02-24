@@ -46,19 +46,26 @@ export default function App() {
     const building = buildings.find((building) => building.value === currBuilding);
 
     // if (building && localStorage.getItem('currentLocation')) {
-    //     const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lon: building.coords[1] });
+    //     const path = await getShortestPath(localStorage.getItem('currentLocation'), { lat: building.coords[0], lng: building.coords[1] });
     //     console.log(path);
     // }
 
     useEffect(() => {
         const getPath = async () => {
-            // Example of how to use the getShortestPath function
-            const path = await getShortestPath({ lat: 49.8072, lng: -97.13052928448 }, { lat: 49.80924310104695, lng: -97.13101744651796 });
-            console.log(path);
+            if (building && localStorage.getItem('curLocationLat') && localStorage.getItem('curLocationLng')) {
+                const path = await getShortestPath(
+                    { lat: parseFloat(localStorage.getItem('curLocationLat')), lng: parseFloat(localStorage.getItem('curLocationLng')) },
+                    {
+                        lat: building.coords[0],
+                        lng: building.coords[1]
+                    }
+                );
+                console.log(path);
+            }
         };
 
         getPath();
-    }, []);
+    }, [building, localStorage.getItem('currentLocation')]);
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({
