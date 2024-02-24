@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMapEvent, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import { useSelector } from 'react-redux';
@@ -52,7 +52,9 @@ export default function App() {
     const displayUtilTypes = utilityList.map((checkedUtil) => utilities.find((util) => util.label === checkedUtil));
     const displayUtils = [];
     displayUtilTypes.forEach((utilType) =>
-        utilType.locations.forEach((location) => displayUtils.push({ location, icon: utilType.mapIcon }))
+        utilType.locations.forEach((location) =>
+            displayUtils.push({ coords: location.coords, image: location.image, icon: utilType.mapIcon })
+        )
     );
 
     return (
@@ -68,9 +70,14 @@ export default function App() {
                 <SetViewOnClick />
 
                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
-                    {/* Mapping through the markers */}
                     {displayUtils.map((displayUtil, id) => {
-                        return <Marker key={id} position={displayUtil.location} icon={displayUtil.icon} />;
+                        return (
+                            <Marker key={id} position={displayUtil.coords} icon={displayUtil.icon}>
+                                <Popup>
+                                    <img src={displayUtil.image} width="100" />
+                                </Popup>
+                            </Marker>
+                        );
                     })}
                 </MarkerClusterGroup>
             </MapContainer>
