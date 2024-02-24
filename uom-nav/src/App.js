@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 import { Box, Stack } from '@mui/material';
 
-import { center, zoom } from './assets/constants';
+import { UM_CENTER_COOR, ZOOM } from './assets/constants';
 import { divIcon, point } from 'leaflet';
 import UtilityDrawer from 'components/UtilityDrawer';
 import SelfLocatedButton from './components/SelfLocatedButton';
@@ -57,7 +57,7 @@ export default function App() {
 
     return (
         <>
-            <MapContainer center={center} zoom={zoom} ref={setMap}>
+            <MapContainer center={UM_CENTER_COOR} zoom={ZOOM} ref={setMap}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -13,7 +13,7 @@ const SelfLocatedButton = ({ map, setPosition }) => {
     }, [map]);
 
     return (
-        <Tooltip title="Self Locate">
+        <Tooltip title="Locate">
             <IconButton variant="contained" color="error" onClick={handleClick}>
                 <IconCurrentLocation />
             </IconButton>
