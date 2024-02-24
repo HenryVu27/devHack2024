@@ -13,6 +13,9 @@ import { divIcon, point } from 'leaflet';
 // Material UI
 import { Box, Stack } from '@mui/material';
 
+// Toastify
+import { toast } from 'react-toastify';
+
 // Components
 import UtilityDrawer from 'components/UtilityDrawer';
 import SelfLocatedButton from './components/SelfLocatedButton';
@@ -67,8 +70,11 @@ export default function App() {
                 //         lng: building.coords[1]
                 //     }
                 // );
-                console.log(shortestPath);
-                setPath(shortestPath[0]);
+                if (shortestPath[0].error) {
+                    toast.error(shortestPath[0].error);
+                } else {
+                    setPath(shortestPath[0]);
+                }
             } else {
                 setPath(null);
             }
