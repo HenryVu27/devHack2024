@@ -52,7 +52,8 @@ export default function App() {
 
     useEffect(() => {
         const getPath = async () => {
-            const path = await getShortestPath({ lat: -97.1341773, lng: 49.8108516 }, { lat: -97.1335224, lng: 49.8110807 });
+            // Example of how to use the getShortestPath function
+            const path = await getShortestPath({ lat: 49.8072, lng: -97.13052928448 }, { lat: 49.80924310104695, lng: -97.13101744651796 });
             console.log(path);
         };
 

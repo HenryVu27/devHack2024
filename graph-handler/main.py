@@ -33,4 +33,4 @@ def read_root():
 
 @app.post("/shortest-path")
 def navigate(data: Coordinates):
-    return graph.navigation(data.lon1, data.lat1, data.lon2, data.lat2)
+    return graph.navigation(data.lat1, data.lon1, data.lat2, data.lon2)
