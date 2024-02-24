@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { useState } from 'react';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+
+import { useSelector } from 'react-redux';
+
+import { Box, Stack } from '@mui/material';
+
+import { center, zoom } from './assets/constants';
+import { divIcon, point } from 'leaflet';
 import SetViewOnClick from './components/SetViewOnClick';
-
-import { Icon } from 'leaflet';
 import UtilityDrawer from 'components/UtilityDrawer';
+import SelfLocatedButton from './components/SelfLocatedButton';
+import RecenterButton from './components/RecenterButton';
+import utilities from './assets/utilities';
+import { pinIcon } from 'assets/mapIcons';
 
-// create custom icon
-const customIcon = new Icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-    // iconUrl: require('./icons/placeholder.png'),
-    iconSize: [38, 38] // size of the icon
-});
+// custom cluster icon
+const createClusterCustomIcon = function (cluster) {
+    return new divIcon({
+        html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
+        className: 'custom-marker-cluster',
+        iconSize: point(33, 33, true)
+    });
+};
 
 export default function App() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [position, setPosition] = useState(null);
-
-    const SelfLocation = () => {
-        const map = useMapEvents({
-            contextmenu() {
-                map.locate();
-            },
-            locationfound(e) {
-                setPosition(e.latlng);
-                map.flyTo(e.latlng, map.getZoom());
-            }
-        });
-
-        return position === null ? null : <Marker position={position} icon={customIcon} />;
-    };
+    const [map, setMap] = useState(null);
+    const utilityList = useSelector((state) => state.utility.utilityList);
 
     const AddMarkerToClickLocation = () => {
         useMapEvents({
@@ -40,22 +39,42 @@ export default function App() {
             }
         });
 
-        return markerPosition === null ? null : <Marker position={markerPosition} icon={customIcon} />;
+        return markerPosition === null ? null : <Marker position={markerPosition} icon={pinIcon} />;
     };
+
+    const displayUtilTypes = utilityList.map((checkedUtil) => utilities.find((util) => util.label === checkedUtil));
+    const displayUtils = [];
+    displayUtilTypes.forEach((utilType) =>
+        utilType.locations.forEach((location) => displayUtils.push({ location, icon: utilType.mapIcon }))
+    );
 
     return (
         <>
-            <MapContainer center={[49.8092, -97.13]} zoom={13}>
+            <MapContainer center={center} zoom={zoom} ref={setMap}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
 
                 <AddMarkerToClickLocation />
-                <SelfLocation />
+                {position === null ? null : <Marker position={position} icon={pinIcon} />}
+
                 <SetViewOnClick />
+
+                <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
+                    {/* Mapping through the markers */}
+                    {displayUtils.map((displayUtil, id) => {
+                        return <Marker key={id} position={displayUtil.location} icon={displayUtil.icon} />;
+                    })}
+                </MarkerClusterGroup>
             </MapContainer>
-            <UtilityDrawer />
+            <Box>
+                <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+                    {map ? <SelfLocatedButton map={map} setPosition={setPosition} /> : null}
+                    <UtilityDrawer />
+                    {map ? <RecenterButton map={map} /> : null}
+                </Stack>
+            </Box>
         </>
     );
 }

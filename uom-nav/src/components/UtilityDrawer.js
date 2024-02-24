@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { Box, Drawer, Button } from '@mui/material';
+import { Box, Drawer, Button, Divider } from '@mui/material';
 
 import CheckBoxes from './CheckBoxes';
+import BuildingSelect from './BuildingSelect';
 
 const UtilityDrawer = () => {
     const [open, setOpen] = useState(false);
@@ -12,7 +13,8 @@ const UtilityDrawer = () => {
     };
 
     const DrawerList = (
-        <Box sx={{ width: 250 }} role="presentation">
+        <Box sx={{ width: 250, m: 3 }} role="presentation">
+            <BuildingSelect />
             <CheckBoxes />
         </Box>
     );
