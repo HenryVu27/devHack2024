@@ -7,6 +7,7 @@ import { useState } from 'react';
 import SetViewOnClick from './AnimatedPanning';
 
 import { Icon, divIcon, point } from 'leaflet';
+import UtilityDrawer from 'components/UtilityDrawer';
 
 // create custom icon
 const customIcon = new Icon({
