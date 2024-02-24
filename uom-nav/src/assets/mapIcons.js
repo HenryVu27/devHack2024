@@ -45,8 +45,4 @@ const tunnelIcon = new Icon({
     iconSize: [38, 38] // size of the icon
 });
 
-const selfIncon = new Icon({
-    iconUrl: require
-});
-
 export { pinIcon, wcIcon, stairsIcon, bookIcon, escalatorIcon, parkingIcon, packbackIcon, tunnelIcon, selfIcon };
