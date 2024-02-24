@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import { Box, Drawer, Button } from '@mui/material';
 
 import CheckBoxes from './CheckBoxes';
 
 export default function UtilityDrawer() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);

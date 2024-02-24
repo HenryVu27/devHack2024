@@ -8,7 +8,7 @@ import utilities from 'assets/utilities';
 export default function CheckBoxes() {
     return (
         <FormGroup sx={{ m: 3 }}>
-            {utilities.map((utility) => (
+            {utilities.map((utility, idx) => (
                 <FormControlLabel
                     control={
                         <>
@@ -17,6 +17,7 @@ export default function CheckBoxes() {
                         </>
                     }
                     label={utility.label}
+                    key={idx}
                 />
             ))}
         </FormGroup>

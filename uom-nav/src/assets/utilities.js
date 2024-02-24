@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconBadgeWc, IconStairs } from '@tabler/icons-react';
 
 const utilities = [
