@@ -67,6 +67,7 @@ export default function App() {
                 //         lng: building.coords[1]
                 //     }
                 // );
+                console.log(shortestPath);
                 setPath(shortestPath[0]);
             } else {
                 setPath(null);
