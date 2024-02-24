@@ -1,0 +1,24 @@
+import * as React from 'react';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
+import utilities from 'assets/utilities';
+
+export default function CheckBoxes() {
+    return (
+        <FormGroup sx={{ m: 3 }}>
+            {utilities.map((utility) => (
+                <FormControlLabel
+                    control={
+                        <>
+                            <Checkbox />
+                            {utility.icon}
+                        </>
+                    }
+                    label={utility.label}
+                />
+            ))}
+        </FormGroup>
+    );
+}
