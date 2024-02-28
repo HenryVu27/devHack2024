@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Welcome to .devHacks 2024!
 
 Welcome to .devHacks 2024, an exciting hackathon event where creativity and innovation collide! We're thrilled to have you join us for this incredible journey of hacking, learning, and collaboration.
@@ -46,3 +47,6 @@ Our volunteers who have made .devHacks 2024 possible.
 Thank you for your support!
 
 Happy hacking, and best of luck to all participants! Let's make .devHacks 2024 an unforgettable experience!
+=======
+# devHack2024
+>>>>>>> 089d1ce2c98528b90a4457e3a57d5050eda966f0
