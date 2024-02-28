@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Welcome to .devHacks 2024!
 
 Welcome to .devHacks 2024, an exciting hackathon event where creativity and innovation collide! We're thrilled to have you join us for this incredible journey of hacking, learning, and collaboration.
